@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+import argparse
+import validators
+import requests
+from urllib.parse import urlparse
+from bs4 import BeautifulSoup
+from bs4 import Comment
+
+
+parser = argparse.ArgumentParser(description= 'The Achilles HTML Vilnerabili    ty Analyser version 1.0') 
+parser.add_argument('-v', '-version', action = 'version', version = '%(prog)    s 1.0')
+parser.add_argument('url', type=str, help= 'The URL of the HTML to analyse')
+    #parser.add_argument('-o', '--output', action = 'store_true', help = 'output     the result into a file')
+    #parser.add_argument('radius', help = 'radius of the cylinder',type= int) 
+    #parser.add_argument( 'height', help= "the height of cylinder",type = int)  
+args = parser.parse_args()
+url = args.url 
+
+if (validators.url(url)):
+    result_html = requests.get(url).text
+    parsed_html = BeautifulSoup(result_html, 'html.parser')
+    forms = (parsed_html.find_all('form'))
+
+    for form in forms:
+        if((form.get('action'.find('https'<0) and (urlparse(url).scheme != 'https'))):
+            form_is_secure = False
+            print(form_is_secure)
+
+else:
+    print('invalid url:PLease include full url')
+
+
+
+
+
